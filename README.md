@@ -14,6 +14,9 @@ Many trading bot tutorials stop at a single indicator or a toy strategy. This pr
 6. Order simulation
 7. Portfolio monitoring
 8. Performance review and optimization
+9. Backtest evaluation
+10. Dashboard reporting
+11. Exchange and ML extension points
 
 ## Project structure
 
@@ -21,6 +24,7 @@ Many trading bot tutorials stop at a single indicator or a toy strategy. This pr
 trading-agent-workflow/
 ├── README.md
 ├── requirements.txt
+├── .env.example
 ├── .gitignore
 ├── src/
 │   └── trading_agent/
@@ -35,6 +39,11 @@ trading-agent-workflow/
 │       ├── monitor.py
 │       ├── pipeline.py
 │       ├── backtest.py
+│       ├── database.py
+│       ├── exchange.py
+│       ├── ml_signal.py
+│       ├── dashboard.py
+│       ├── run_dashboard.py
 │       └── main.py
 └── docs/
     └── workflow.md
@@ -62,29 +71,31 @@ python -m trading_agent.main
 python -m trading_agent.backtest
 ```
 
-You can also run it directly from the `src` directory if needed:
+### 3) Generate dashboard
 
 ```bash
-PYTHONPATH=src python -m trading_agent.main
-PYTHONPATH=src python -m trading_agent.backtest
+PYTHONPATH=src python -m trading_agent.run_dashboard
+```
+
+Open the generated dashboard file in the `dashboard_data/` folder.
+
+## Environment variables
+
+Copy `.env.example` to `.env` and fill in your credentials for live execution.
+
+```bash
+cp .env.example .env
 ```
 
 ## What the workflow does
 
-This project creates synthetic market data, calculates technical indicators, produces BUY/SELL/HOLD signals, applies risk rules, simulates order execution, and outputs a summary of portfolio metrics.
+This project creates synthetic market data, calculates technical indicators, produces BUY/SELL/HOLD signals, applies risk rules, simulates order execution, and outputs a summary of portfolio metrics. It also supports:
 
-## Example output
-
-The agent prints a performance summary like:
-
-```text
-=== Trading Agent Summary ===
-Total trades: 4
-Win rate: 50.00%
-Total PnL: 4231.23
-Final equity: 104231.23
-Max drawdown: 0.08
-```
+- SQLite persistence
+- backtested strategy evaluation
+- ML-based signal ideas
+- exchange client integration to Binance/Alpaca
+- HTML dashboard output
 
 ## Production upgrade path
 
@@ -93,12 +104,12 @@ This project is intentionally modular so it can evolve into a live agent using:
 - Alpaca or Interactive Brokers integration
 - PostgreSQL for trade history
 - Redis for event handling
-- Machine learning models for signal generation
+- machine learning models for signal generation
 - a backtesting engine for historical validation
 
 ## Workflow summary
 
-Market data -> cleaning -> indicators -> strategy -> risk -> execution -> monitoring -> optimization
+Market data -> cleaning -> indicators -> strategy -> risk -> execution -> monitoring -> optimization -> dashboard
 
 ## License
 
