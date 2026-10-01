@@ -34,6 +34,7 @@ trading-agent-workflow/
 │       ├── execution.py
 │       ├── monitor.py
 │       ├── pipeline.py
+│       ├── backtest.py
 │       └── main.py
 └── docs/
     └── workflow.md
@@ -49,19 +50,28 @@ pip install -r requirements.txt
 
 ## Run the project
 
+### 1) Strategy pipeline
+
 ```bash
 python -m trading_agent.main
+```
+
+### 2) Backtest runner
+
+```bash
+python -m trading_agent.backtest
 ```
 
 You can also run it directly from the `src` directory if needed:
 
 ```bash
 PYTHONPATH=src python -m trading_agent.main
+PYTHONPATH=src python -m trading_agent.backtest
 ```
 
 ## What the workflow does
 
-This project creates a synthetic market dataset, calculates technical indicators, produces BUY/SELL/HOLD signals, applies risk rules, simulates order execution, and outputs a summary of portfolio metrics.
+This project creates synthetic market data, calculates technical indicators, produces BUY/SELL/HOLD signals, applies risk rules, simulates order execution, and outputs a summary of portfolio metrics.
 
 ## Example output
 
